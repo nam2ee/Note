@@ -8,7 +8,7 @@
 ## Decentralized AI(Utopia Architecture)
 First, we must discuss what decentralized AI is, how it works, and why it matters. Currently, there are numerous D-AI projects in the crypto space.
 
-![AIXCrypto](images/ecosystem.png)
+![AIXCrypto](image/ecosystem.png)
 
 (Thanks to AImedaResearch!)
 While some of these projects are substantial, others seem quite meaningless. I believe “decentralized AI” should be synonymous with democratic AI. It shouldn’t be a network where models compete based on the quality of their inferences. Instead, users should be able to choose the best models themselves. It doesn’t necessarily need to be a blockchain system.
@@ -21,7 +21,7 @@ To address this, decentralized AI systems based on blockchain infrastructure nee
 Discussions about open-source AI models or model ownership seem to be a next step. Personally, I see potential risks in indiscriminately releasing open-source models, such as AI jailbreaks and other forms of misuse. While I believe in the necessity of open-sourcing AI and establishing governance around it, let’s leave that for another discussion.
 For now, methods to ensure the privacy of training data (known as Privacy Preserving Machine Learning) might include Federated Learning and Homomorphic Encryption. Fair compensation for training data could be achieved through the ZKML and OPML concepts in my envisioned Utopia Architecture. Here is my proposed Utopia Architecture:
 
-![Utopia](images/utopia.png)
+![Utopia](image/utopia.png)
 
 To be precise, this is neither an open-source model nor a privacy-preserving architecture. However, it is a practical structure that allows for compensation in exchange for sacrificing personal data, without compromising performance.
 The components are as follows:
@@ -102,7 +102,7 @@ payable(dataProviders[i].addr).transfer(reward);
 
 To introduce it properly, the formula used to measure the contribution of model training is called the Shapley Value. The Shapley Value is a method used in game theory to fairly distribute the contribution of each player in a cooperative game. The formula is expressed as follows:
 
-![Shapley](images/shapley.png)
+![Shapley](image/shapley.png)
 
 (Note: 𝜙(v) is the Shapley Value of provider i,
 N is the set of all providers,
@@ -115,38 +115,38 @@ Federated Learning (FL) is a technique that allows for model training on distrib
 The Process of Federated Learning is below.
 Local Model Training: Each data provider trains a model on their local data. The local model update is as follows:
 
-![Local Model](images/localmodel.png)
+![Local Model](image/localmodel.png)
 
 where w(t) are the model parameters at time t, ηis the learning rate, L is the loss function, and D is the local data of provider i .
 Model Broadcast: Each data provider sends the trained local model parameters w(t+1) to the central server.
 Global Model Aggregation: The central server aggregates the local model parameters received from all data providers to update the global model. The aggregation method(FedAvg, Well, another cool aggregation methods are exist) is given by (where N is the number of data providers.)
 
-![Global Model](images/globalmodel.png)
+![Global Model](image/globalmodel.png)
 
 ## Problem in Federated Learning
 Federated Learning faces several issues
 - Performance Issues Due to Non-IID Data: When the data distributions of each data provider differ (Non-IID), the performance of the global model can degrade. This is because local models may overfit to specific data distributions. Mathematically, when the data distribution
 
-![NonIID1](images/noniid1.png)
+![NonIID1](image/noniid1.png)
 
 provider i differs, the global model’s loss function can be expressed as
 
-![NonIID2](images/noniid2.png)
+![NonIID2](image/noniid2.png)
 
 where p_i is the proportion of data from provider i . Non-IID data distributions make it challenging to optimize the global model as each
 
-![NonIID3](images/noniid3.png)
+![NonIID3](image/noniid3.png)
 
 is different.
 - Communication Cost Issues: In Federated Learning, local model parameters must be sent to the central server in each round, significantly increasing communication costs. This issue becomes more severe as the number of data providers increases. The communication cost can be expressed as below. Currently, communication cost is signiture bottleneck of FedML.
 - Global model stealing problem: When broadcast, global model parameters are revealed. I will protect it by encrypting global model by fixed-trainer’s public key. And then, trainers will decrypt the model using their secret key. But there are potential hazards remained.
 
-![Communication Cost](images/communicationcost.png)
+![Communication Cost](image/communicationcost.png)
 
 ### Alternative Metric
 Another method to measure contribution in Federated Learning is the ‘Gradient Norm.’ This method evaluates the contribution based on the magnitude of the gradients sent by each data provider. The formula is as follows:
 
-![Alternative](images/alternative.png)
+![Alternative](image/alternative.png)
 
 This method quantitatively assesses how much each data provider has contributed to model training.
 Federated Learning is a powerful method for training models on distributed data sources while ensuring data privacy. However, Non-IID data and communication cost issues remain challenges. By utilizing contribution measurement methods such as Gradient Norm, a fair reward system can be established. This can enhance the efficiency of Federated Learning and encourage the participation of data providers.
@@ -155,11 +155,11 @@ Also, like ZKML, it can be used to distribute compensation rewards. But still no
 ## Problem Anatomy
 Now, if we think about it carefully, it becomes clear why we face so many issues like the inability to efficiently measure contributions in AI training. Consider the Discrete Logarithm Problem (DLP) in cryptography. This problem often involves solving equations like
 
-![DLP](images/dlp.png)
+![DLP](image/dlp.png)
 
 using elliptic curve groups, and the process of training AI models bears a striking resemblance to this. For instance, given
 
-![AIDLP](images/aidlp.png)
+![AIDLP](image/aidlp.png)
 
 , finding 𝑚(𝑡+1) requires vast amounts of data and significant computational resources, making it akin to a DL-Secure group. This is because it is a problem that is difficult and costly to solve.
 However, issues such as data ownership and contribution measurement (with a focus on the latter here) arise primarily because ‘verification’ is challenging. How can we easily and quickly verify that
